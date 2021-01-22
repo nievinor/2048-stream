@@ -3,6 +3,7 @@ package ru.sbrf.game2048;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SquareBoard<T> extends Board<Key, T> {
 
@@ -22,13 +23,21 @@ public class SquareBoard<T> extends Board<Key, T> {
 
     @Override
     public List<Key> availableSpace() {
-        List<Key> keys = new ArrayList<>();
-        for (Map.Entry<Key, T> entry : board.entrySet()) {
-            if (entry.getValue() == null) {
-                keys.add(entry.getKey());
-            }
-        }
-        return keys;
+//        List<Key> keys = new ArrayList<>();
+//        for (Map.Entry<Key, T> entry : board.entrySet()) {
+//            if (entry.getValue() == null) {
+//                keys.add(entry.getKey());
+//            }
+//        }
+
+       return board
+                .entrySet()
+                .stream()
+                .filter(elem -> elem.getValue() == null)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+//        return keys;
     }
 
     @Override
